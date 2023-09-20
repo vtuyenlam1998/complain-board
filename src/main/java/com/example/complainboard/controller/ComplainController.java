@@ -4,8 +4,10 @@ import com.example.complainboard.model.Complain;
 import com.example.complainboard.pageable.MyBatisPageable;
 import com.example.complainboard.payload.request.CreateComplainRequestDTO;
 import com.example.complainboard.payload.request.EditComplainRequestDTO;
+import com.example.complainboard.payload.response.CurrentUserResponseDTO;
 import com.example.complainboard.payload.response.PageResponseDTO;
 import com.example.complainboard.service.ComplainService;
+import com.example.complainboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class ComplainController {
     private final ComplainService complainService;
+    private final UserService userService;
 
     @GetMapping
     public ModelAndView showAllComplains(@RequestParam(name = "page",required = false,defaultValue = "0") Integer page,
@@ -30,7 +33,9 @@ public class ComplainController {
         MyBatisPageable pageable = new MyBatisPageable(page,size);
         ModelAndView modelAndView = new ModelAndView("homepage");
         PageResponseDTO complains = complainService.findByPage(pageable);
+//        CurrentUserResponseDTO currentUser = userService.getCurrentUser();
         modelAndView.addObject("complains",complains);
+//        modelAndView.addObject("user",currentUser);
         return modelAndView;
     }
 

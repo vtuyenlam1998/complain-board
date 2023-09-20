@@ -1,22 +1,18 @@
-package com.example.complainboard.model;
+package com.example.complainboard.payload.request;
 
+import com.example.complainboard.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class User {
-    private Long id;
+public class UserRegisterRequestDTO {
     private String username;
     private String password;
-    private Role role;
-    private List<Complain> complainList;
 }

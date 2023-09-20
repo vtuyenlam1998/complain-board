@@ -20,4 +20,5 @@ public class Complain {
     private String comment;
     private Boolean active;
     private LocalDateTime timeCreation;
+    private User user;
 }

@@ -16,6 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthController {
     private final UserService userService;
 
+    @GetMapping("/log-out")
+    public ModelAndView logout() {
+        return new ModelAndView("login");
+    }
     @GetMapping("/login")
     public ModelAndView login() {
         return new ModelAndView("login");

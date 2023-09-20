@@ -49,6 +49,7 @@
 <body>
 
 <h1 class="text-decoration-underline text-center">Complain List</h1>
+<a href="//login?logout=true"><button>Log out</button></a>
 <table class="table">
     <thead>
     <tr>

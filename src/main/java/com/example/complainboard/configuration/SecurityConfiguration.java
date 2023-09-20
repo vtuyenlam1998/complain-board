@@ -18,11 +18,11 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackageClasses = {UserDetailsServiceImpl.class, UserMapper.class})
-public class SpringConfiguration {
+@ComponentScan(basePackageClasses = {UserDetailsServiceImpl.class,UserMapper.class})
+public class SecurityConfiguration {
     private final UserDetailsServiceImpl userDetailsService;
 
-    public SpringConfiguration(UserDetailsServiceImpl userDetailsService) {
+    public SecurityConfiguration(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -40,17 +40,29 @@ public class SpringConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
 
+        //Pages not require login
         http.authorizeHttpRequests().antMatchers(
-                "/static/**", "css/**", "/js/**", "img/**", "/login", "/logout", "/", "/home"
+                "/static/**", "/css/**", "/js/**", "/img/**",
+                "/login", "/logout"
         ).permitAll();
+
+        // Pages require login with role: ROLE_ADMIN.
+        // If not login at admin role yet, redirect to /login
+        // Pages require login with roles: ROLE_USER, ROLE_ADMIN.
+        // If not login yet, redirect to /login
+
 
         http.authorizeHttpRequests()
                 .antMatchers("/complain/**")
                 .hasAnyRole("USER","ADMIN");
 
+
+        // When user login with ROLE_USER, but try to
+        // access pages require ROLE_ADMIN, redirect to /error-403
         http.authorizeHttpRequests().and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
 
+        // Configure login page (check login by spring security)
         http.authorizeHttpRequests()
                 .anyRequest().authenticated()
                 .and()
@@ -66,15 +78,19 @@ public class SpringConfiguration {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout=true");
 
+        // Configure remember me (save token in database)
         http.authorizeHttpRequests()
                 .and().rememberMe()
                 .tokenRepository(this.persistentTokenRepository())
-                .tokenValiditySeconds(24*60*60);
+                .tokenValiditySeconds(24 * 60 * 60);//24 hours
+
         return http.build();
     }
 
+    // Token stored in memory (of web server)
     public PersistentTokenRepository persistentTokenRepository() {
-        return new InMemoryTokenRepositoryImpl();
+        InMemoryTokenRepositoryImpl inMemoryTokenRepository = new InMemoryTokenRepositoryImpl();
+        return inMemoryTokenRepository;
     }
 
 }

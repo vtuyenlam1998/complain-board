@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ComplainConverter {
+
     public Complain convertCreateRequestDTOToEntity(CreateComplainRequestDTO requestDTO) {
         return Complain.builder()
                 .title(requestDTO.getTitle())

@@ -10,12 +10,6 @@
 <head>
     <title>Title</title>
     <style>
-        /*
-VIEW IN FULL SCREEN MODE
-FULL SCREEN MODE: http://salehriaz.com/404Page/404.html
-
-DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
-*/
 
         @import url('https://fonts.googleapis.com/css?family=Dosis:300,400,500');
 
@@ -309,13 +303,6 @@ DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
         }
     </style>
 </head>
-<!--
-VIEW IN FULL SCREEN MODE
-FULL SCREEN MODE: http://salehriaz.com/404Page/404.html
-
-DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
--->
-
 <body class="bg-purple">
 
 <div class="stars">

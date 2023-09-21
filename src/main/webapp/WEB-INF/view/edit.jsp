@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="header.jsp" %>
 <html>
 <head>
     <title>Edit Complain</title>
@@ -18,21 +19,21 @@
         <legend>
             Complain Form <c:out value="${complain.id}"/>
         </legend>
-        <table>
+        <table class="table">
             <tr>
                 <input type="hidden" id="id" name="id" size="45" title="letter and number allowed" value="${complain.id}">
-                <td><label for="name">Title:</label></td>
-                <td><input type="text" id="name" name="name" size="45" title="letter and number allowed" value="${complain.title}"></td>
+                <th scope="row"><label for="title">Title:</label></th>
+                <td><input type="text" id="title" name="title" size="45" title="letter and number allowed" value="${complain.title}"></td>
             </tr>
             <tr>
-                <td><label for="description">Comment:</label></td>
-                <td><input type="text" id="description" name="description" size="45" title="letter and number allowed" value="${complain.comment}"></td>
+                <th scope="row"><label for="comment">Comment:</label></th>
+                <td><input type="text" id="comment" name="comment" size="45" title="letter and number allowed" value="${complain.comment}"></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <a href="/complain"><button type="button">Cancel</button></a>
-                    <button type="submit">Edit</button>
+                    <a href="/complain"><button type="button" class="btn btn-success">Cancel</button></a>
+                    <button type="submit" class="btn btn-primary">Edit</button>
                 </td>
             </tr>
         </table>

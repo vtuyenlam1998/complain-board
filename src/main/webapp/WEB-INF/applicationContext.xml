@@ -1,30 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:security="http://www.springframework.org/schema/security"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/security
-        http://www.springframework.org/schema/security/spring-security.xsd">
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security-3.2.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 <!--    &lt;!&ndash; Enable Spring Security &ndash;&gt;-->
-<!--    <security:http auto-config="true">-->
+<!--    <http auto-config="true">-->
 <!--        &lt;!&ndash; Define security constraints &ndash;&gt;-->
-<!--        <security:intercept-url pattern="/complain/**" access="hasAnyRole('USER','ADMIN')" />-->
-<!--        <security:form-login login-page="/login" default-target-url="/complain"-->
+<!--        <intercept-url pattern="/complain/**" access="hasAnyRole('USER','ADMIN')" />-->
+<!--        <form-login login-page="/login" default-target-url="/complain"-->
 <!--                             authentication-failure-url="/login?error=true" login-processing-url="/j_spring_security_check" />-->
-<!--        <security:logout logout-success-url="/login?logout=true" />-->
-<!--    </security:http>-->
+<!--        <logout logout-success-url="/login?logout=true" />-->
+<!--    </http>-->
 
-<!--    &lt;!&ndash; Configure authentication manager &ndash;&gt;-->
-<!--    <security:authentication-manager>-->
-<!--        <security:authentication-provider>-->
+<!--    <authentication-manager >-->
+<!--        <authentication-provider user-service-ref="UserDetailsService">-->
+<!--            <password-encoder ref="bcryptEncoder"/>-->
+<!--        </authentication-provider>-->
+<!--    </authentication-manager>-->
+
+    <!-- cấu hình chi tiết từ logic xử lý trên -->
+
+<!--    &lt;!&ndash; password md5 &ndash;&gt;-->
+<!--    <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />-->
+<!--    &lt;!&ndash; xử lý authentication khi submit đăng nhập &ndash;&gt;-->
+<!--    <beans:bean id="UserDetailsService" class="com.example.complainboard.service.impl.UserDetailsServiceImpl" />-->
+
+
+<!--     Configure authentication manager-->
+<!--    <authentication-manager>-->
+<!--        <authentication-provider>-->
 <!--            &lt;!&ndash; Configure your custom userDetailsService here &ndash;&gt;-->
-<!--            <security:user-service>-->
-<!--                <security:user name="user" password="password" authorities="ROLE_USER" />-->
-<!--                <security:user name="admin" password="admin" authorities="ROLE_ADMIN" />-->
-<!--            </security:user-service>-->
-<!--        </security:authentication-provider>-->
-<!--    </security:authentication-manager>-->
-</beans>
+<!--            <user-service>-->
+<!--                <user name="user" password="password" authorities="ROLE_USER" />-->
+<!--                <user name="admin" password="admin" authorities="ROLE_ADMIN" />-->
+<!--            </user-service>-->
+<!--        </authentication-provider>-->
+<!--    </authentication-manager>-->
+
+    <context:component-scan base-package="com.example.complainboard"/>
+</beans:beans>

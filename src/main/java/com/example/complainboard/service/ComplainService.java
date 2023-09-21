@@ -12,7 +12,7 @@ import java.util.List;
 public interface ComplainService {
     List<Complain> findAll();
     Complain findById(Long id);
-    Complain save(CreateComplainRequestDTO createComplainRequestDTO);
+    Complain save(CreateComplainRequestDTO createComplainRequestDTO) throws IllegalAccessException;
     Complain update(EditComplainRequestDTO editComplainRequestDTO);
     Complain delete(Long id);
     PageResponseDTO findByPage(MyBatisPageable pageable);

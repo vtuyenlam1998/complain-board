@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public CurrentUserResponseDTO getCurrentUser() {
+    public CurrentUserResponseDTO getCurrentUser() throws IllegalAccessException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = null;
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -45,5 +45,10 @@ public class UserServiceImpl implements UserService {
         }
         assert userDetails != null;
         return userConverter.convertUserDetailsToResponseDTO(userDetails);
+    }
+
+    @Override
+    public User findByComplainId(Long id) {
+        return userMapper.getUserByComplainId(id);
     }
 }

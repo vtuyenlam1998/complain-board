@@ -1,6 +1,7 @@
 package com.example.complainboard.service;
 
 import com.example.complainboard.model.Role;
+import com.example.complainboard.model.User;
 import com.example.complainboard.payload.request.UserRegisterRequestDTO;
 import com.example.complainboard.payload.response.CurrentUserResponseDTO;
 
@@ -11,5 +12,7 @@ public interface UserService {
 
     void register(UserRegisterRequestDTO requestDTO);
 
-    CurrentUserResponseDTO getCurrentUser();
+    CurrentUserResponseDTO getCurrentUser() throws IllegalAccessException;
+
+    User findByComplainId(Long id);
 }

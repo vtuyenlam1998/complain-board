@@ -16,6 +16,7 @@ public interface RoleMapper {
             @Result(column = "name", property = "name"),
             @Result(column = "description", property = "description")
     })
+
     @Select("SELECT * FROM roles WHERE id = #{id}")
     Role getRoleById(Long id);
 }

@@ -27,14 +27,12 @@ public class AuthController {
 
     @GetMapping("/access-denied")
     public ModelAndView accessDenied() {
-        ModelAndView modelAndView = new ModelAndView("error-403");
-        return modelAndView;
+        return new ModelAndView("error-403");
     }
 
     @GetMapping("/not-found")
     public ModelAndView notFound() {
-        ModelAndView modelAndView = new ModelAndView("error-404");
-        return modelAndView;
+        return new ModelAndView("error-404");
     }
 
 //    @PostMapping("/signup")

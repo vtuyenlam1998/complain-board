@@ -26,28 +26,28 @@
     <legend>
         Complain Information <c:out value="${complain.id}"/>
     </legend>
-    <table>
+    <table class="table">
         <tr>
-            <th>Title: </th>
+            <th scope="row">Title: </th>
             <td><c:out value="${complain.title}"/></td>
         </tr>
         <tr>
-            <th>Comment: </th>
+            <th scope="row">Comment: </th>
             <td><c:out value="${complain.comment}"/></td>
         </tr>
         <tr>
-            <th>Time Creation: </th>
+            <th scope="row">Time Creation: </th>
             <td><c:out value="${complain.timeCreation}"/></td>
         </tr>
         <tr>
             <td>
-                <a href="/complain"><button type="submit">Cancel</button></a>
+                <a href="/complain"><button class="btn btn-success" type="submit">Cancel</button></a>
             </td>
             <td>
                 <a href="/complain/edit/${complain.id}">
-                    <button type="submit">Edit</button>
+                    <button class="btn btn-primary" type="submit">Edit</button>
                 </a>
-                <button type="button" onclick="deleteComplain(${complain.id})">Delete</button>
+                <button type="button" class="btn btn-danger" onclick="deleteComplain(${complain.id})">Delete</button>
             </td>
         </tr>
     </table>

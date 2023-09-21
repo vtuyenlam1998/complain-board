@@ -3,12 +3,16 @@ package com.example.complainboard.service.impl;
 
 import com.example.complainboard.conveter.ComplainConverter;
 import com.example.complainboard.mapper.ComplainMapper;
+import com.example.complainboard.mapper.UserMapper;
 import com.example.complainboard.model.Complain;
+import com.example.complainboard.model.User;
 import com.example.complainboard.pageable.MyBatisPageable;
 import com.example.complainboard.payload.request.CreateComplainRequestDTO;
 import com.example.complainboard.payload.request.EditComplainRequestDTO;
+import com.example.complainboard.payload.response.CurrentUserResponseDTO;
 import com.example.complainboard.payload.response.PageResponseDTO;
 import com.example.complainboard.service.ComplainService;
+import com.example.complainboard.service.UserService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +23,15 @@ import java.util.List;
 public class ComplainServiceImpl implements ComplainService{
     private final ComplainConverter complainConverter;
     private final ComplainMapper complainMapper;
+    private final UserMapper userMapper;
+    private final UserService userService;
 
     @Autowired
-    public ComplainServiceImpl(ComplainMapper complainMapper, ComplainConverter complainConverter) {
+    public ComplainServiceImpl(ComplainMapper complainMapper, ComplainConverter complainConverter, UserMapper userMapper, UserService userService) {
         this.complainConverter = complainConverter;
         this.complainMapper = complainMapper;
+        this.userMapper = userMapper;
+        this.userService = userService;
     }
     @Override
     public List<Complain> findAll() {
@@ -36,24 +44,27 @@ public class ComplainServiceImpl implements ComplainService{
     }
 
     @Override
-    public Complain save(CreateComplainRequestDTO createComplainRequestDTO) {
-        Complain Complain = complainConverter.convertCreateRequestDTOToEntity(createComplainRequestDTO);
-        complainMapper.insertComplain(Complain);
-        return Complain;
+    public Complain save(CreateComplainRequestDTO createComplainRequestDTO) throws IllegalAccessException {
+        CurrentUserResponseDTO user = userService.getCurrentUser();
+        User currentUser = userMapper.findByUsername(user.getUsername());
+        Complain complain = complainConverter.convertCreateRequestDTOToEntity(createComplainRequestDTO);
+        complain.setUser(currentUser);
+        complainMapper.insertComplain(complain);
+        return complain;
     }
 
     @Override
     public Complain update(EditComplainRequestDTO editComplainRequestDTO) {
-        Complain Complain = complainConverter.convertEditRequestDTOToEntity(editComplainRequestDTO);
-        complainMapper.updateComplain(Complain);
-        return Complain;
+        Complain complain = complainConverter.convertEditRequestDTOToEntity(editComplainRequestDTO);
+        complainMapper.updateComplain(complain);
+        return complain;
     }
 
     @Override
     public Complain delete(Long id) {
-        Complain Complain = complainMapper.getComplainById(id);
+        Complain complain = complainMapper.getComplainById(id);
         complainMapper.deleteComplain(id);
-        return Complain;
+        return complain;
     }
 
     @Override

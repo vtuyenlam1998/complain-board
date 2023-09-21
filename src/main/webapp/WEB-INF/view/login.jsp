@@ -6,231 +6,120 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
     <style>
-        .wrapper {
-            margin-top: 300px;
-            --input-focus: #2d8cf0;
-            --font-color: #323232;
-            --font-color-sub: #666;
-            --bg-color: #fff;
-            --bg-color-alt: #666;
-            --main-color: #323232;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        /* switch card */
-        .switch {
-            transform: translateY(-200px);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            width: 50px;
-            height: 20px;
-        }
-
-        .card-side::before {
-            position: absolute;
-            content: 'Log in';
-            left: -70px;
-            top: 0;
-            width: 100px;
-            text-decoration: underline;
-            color: var(--font-color);
-            font-weight: 600;
-        }
-
-        .card-side::after {
-            position: absolute;
-            content: 'Sign up';
-            left: 70px;
-            top: 0;
-            width: 100px;
-            text-decoration: none;
-            color: var(--font-color);
-            font-weight: 600;
-        }
-
-        .toggle {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            box-sizing: border-box;
-            border-radius: 5px;
-            border: 2px solid var(--main-color);
-            box-shadow: 4px 4px var(--main-color);
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--bg-colorcolor);
-            transition: 0.3s;
-        }
-
-        .slider:before {
-            box-sizing: border-box;
-            position: absolute;
+        .divider:after,
+        .divider:before {
             content: "";
-            height: 20px;
-            width: 20px;
-            border: 2px solid var(--main-color);
-            border-radius: 5px;
-            left: -2px;
-            bottom: 2px;
-            background-color: var(--bg-color);
-            box-shadow: 0 3px 0 var(--main-color);
-            transition: 0.3s;
+            flex: 1;
+            height: 1px;
+            background: #eee;
         }
-
-        .toggle:checked + .slider {
-            background-color: var(--input-focus);
+        .h-custom {
+            height: calc(100% - 73px);
         }
-
-        .toggle:checked + .slider:before {
-            transform: translateX(30px);
-        }
-
-        .toggle:checked ~ .card-side:before {
-            text-decoration: none;
-        }
-
-        .toggle:checked ~ .card-side:after {
-            text-decoration: underline;
-        }
-
-        /* card */
-
-        .flip-card__inner {
-            width: 300px;
-            height: 350px;
-            position: relative;
-            background-color: transparent;
-            perspective: 1000px;
-            /*width: 100%;*/
-            /*height: 100%;*/
-            text-align: center;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-        }
-
-        .toggle:checked ~ .flip-card__inner {
-            transform: rotateY(180deg);
-        }
-
-        .toggle:checked ~ .flip-card__front {
-            box-shadow: none;
-        }
-
-        .flip-card__front, .flip-card__back {
-            padding: 20px;
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            background: lightgrey;
-            gap: 20px;
-            border-radius: 5px;
-            border: 2px solid var(--main-color);
-            box-shadow: 4px 4px var(--main-color);
-        }
-
-        .flip-card__back {
-            width: 100%;
-            transform: rotateY(180deg);
-        }
-
-        .flip-card__form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .title {
-            margin: 20px 0 20px 0;
-            font-size: 25px;
-            font-weight: 900;
-            text-align: center;
-            color: var(--main-color);
-        }
-
-        .flip-card__input {
-            width: 250px;
-            height: 40px;
-            border-radius: 5px;
-            border: 2px solid var(--main-color);
-            background-color: var(--bg-color);
-            box-shadow: 4px 4px var(--main-color);
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--font-color);
-            padding: 5px 10px;
-            outline: none;
-        }
-
-        .flip-card__input::placeholder {
-            color: var(--font-color-sub);
-            opacity: 0.8;
-        }
-
-        .flip-card__input:focus {
-            border: 2px solid var(--input-focus);
-        }
-
-        .flip-card__btn:active, .button-confirm:active {
-            box-shadow: 0px 0px var(--main-color);
-            transform: translate(3px, 3px);
-        }
-
-        .flip-card__btn {
-            margin: 20px 0 20px 0;
-            width: 120px;
-            height: 40px;
-            border-radius: 5px;
-            border: 2px solid var(--main-color);
-            background-color: var(--bg-color);
-            box-shadow: 4px 4px var(--main-color);
-            font-size: 17px;
-            font-weight: 600;
-            color: var(--font-color);
-            cursor: pointer;
+        @media (max-width: 450px) {
+            .h-custom {
+                height: 100%;
+            }
         }
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <div class="card-switch">
-        <label class="switch">
-            <input type="checkbox" class="toggle">
-            <span class="slider"></span>
-            <span class="card-side"></span>
-            <div class="flip-card__inner">
-                <div class="flip-card__front">
-                    <div class="title">Log in</div>
-                    <form class="flip-card__form" name="loginForm" action="/j_spring_security_check" method="post">
-                        <input class="flip-card__input" name="username" placeholder="Username" type="text">
-                        <input class="flip-card__input" name="password" placeholder="Password" type="password">
-                        <button type="submit" class="flip-card__btn">Let`s go!</button>
-                    </form>
-                </div>
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                     class="img-fluid" alt="Sample image">
             </div>
-        </label>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form method="post" action="/j_spring_security_check">
+                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                        <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                            <i class="fab fa-linkedin-in"></i>
+                        </button>
+                    </div>
+
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fw-bold mx-3 mb-0">Or</p>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="username" name="username" class="form-control form-control-lg"
+                               placeholder="Enter a valid username" required/>
+                        <label class="form-label" for="username">Username</label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <input type="password" id="password" name="password" class="form-control form-control-lg"
+                               placeholder="Enter password" required />
+                        <label class="form-label" for="password">Password</label>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-0">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                            <label class="form-check-label" for="form2Example3">
+                                Remember me
+                            </label>
+                        </div>
+                        <a href="#!" class="text-body">Forgot password?</a>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/sign-up"
+                                                                                          class="link-danger">Register</a></p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-</div>
+    <div
+            class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+        <!-- Copyright -->
+        <div class="text-white mb-3 mb-md-0">
+            Copyright © 2020. All rights reserved.
+        </div>
+        <!-- Copyright -->
+
+        <!-- Right -->
+        <div>
+            <a href="#!" class="text-white me-4">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="#!" class="text-white">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+        <!-- Right -->
+    </div>
+</section>
 </body>
 </html>

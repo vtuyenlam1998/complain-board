@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 public class Role {
     private Long id;
+    private String name;
     private String description;
     private List<User> userList;
 }

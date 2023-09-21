@@ -7,52 +7,28 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="header.jsp" %>
 <html>
 <head>
     <title>Complain List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style>
-        table {
-            border: 1px solid #000;
-        }
-
-        th, td {
-            border: 1px dotted #555;
-        }
-
         .message {
             color: green;
         }
     </style>
-    <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css"
-            rel="stylesheet"
-    />
-    <!-- MDB -->
-    <script
-            type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
-    ></script><!-- MDB -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
 
 <h1 class="text-decoration-underline text-center">Complain List</h1>
-<a href="//login?logout=true"><button>Log out</button></a>
-<table class="table">
+<div class="flex-box justify-content-center float-end">
+    <p class="text-uppercase fw-bold" style="width: 6rem">Hello: ${user.username}</p><a href="/logout">
+        <button class="btn btn-warning">Log out</button>
+    </a>
+</div>
+<table class="table table-striped">
     <thead>
-    <tr>
+    <tr class="table-info">
         <th scope="col">Id</th>
         <th scope="col">Title</th>
         <th scope="col">Creator</th>
@@ -66,13 +42,24 @@
                 <c:out value="${c.id}"/>
             </th>
             <td>
-                <a href="/complain/${c.id}">${c.title}</a>
+                <c:set var="username" value="${user.username}"/>
+                <c:choose>
+                    <c:when test = "${user.role == 'ROLE_ADMIN' }">
+                        <a href="/complain/${c.id}">${c.title}</a>
+                    </c:when>
+                    <c:when test = "${c.user.username == username}">
+                        <a href="/complain/${c.id}">${c.title}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <c:out value="${c.title}"/>
+                    </c:otherwise>
+                </c:choose>
             </td>
             <td>
-                <c:out value="${c.comment}"/>
+                <c:out value="${c.user.username}"/>
             </td>
             <td>
-                <c:out value="${c.timeCreation}"/>
+                <c:out value="${c.timeCreation}" />
             </td>
         </tr>
     </c:forEach>
@@ -86,17 +73,17 @@ There are ${requestScope.complains.complainList.size()} complain (s) in list.
     </form>
 </div>
 <div class="d-flex justify-content-center">
-        <a href="/complain?page=0">
-            <button type="button" class="btn btn-primary btn-floating">
-                <i class="fa-solid fa-backward"></i>
-            </button>
-        </a>
-    <c:if test="${complains.hasPrevious}">
-    <a href="/complain?page=${complains.pageNumber - 1}">
+    <a href="/complain?page=0">
         <button type="button" class="btn btn-primary btn-floating">
-            <i class="fa-solid fa-caret-left"></i>
+            <i class="fa-solid fa-backward"></i>
         </button>
     </a>
+    <c:if test="${complains.hasPrevious}">
+        <a href="/complain?page=${complains.pageNumber - 1}">
+            <button type="button" class="btn btn-primary btn-floating">
+                <i class="fa-solid fa-caret-left"></i>
+            </button>
+        </a>
     </c:if>
     <c:if test="${(complains.pageNumber + 2 > complains.totalPages) && (complains.pageNumber > 0)}">
         <a href="/complain?page=${complains.pageNumber-2}">
@@ -112,20 +99,21 @@ There are ${requestScope.complains.complainList.size()} complain (s) in list.
             </button>
         </a>
     </c:if>
-<c:if test="${complains.totalPages - 1 >= complains.pageNumber}">
+    <c:if test="${complains.totalPages - 1 >= complains.pageNumber}">
         <a href="/complain?page=${complains.pageNumber}">
-            <button type="button" class="btn btn-outline-info btn-link btn-floating btn-primary" data-mdb-ripple-color="blue">
+            <button type="button" class="btn btn-outline-info btn-link btn-floating btn-primary"
+                    data-mdb-ripple-color="blue">
                 <span>${complains.pageNumber + 1}</span>
             </button>
         </a>
-</c:if>
-<c:if test="${complains.totalPages > (complains.pageNumber + 1)}">
+    </c:if>
+    <c:if test="${complains.totalPages > (complains.pageNumber + 1)}">
         <a href="/complain?page=${complains.pageNumber + 1}">
             <button type="button" class="btn btn-outline-info btn-link btn-floating" data-mdb-ripple-color="blue">
                 <span>${complains.pageNumber + 2}</span>
             </button>
         </a>
-</c:if>
+    </c:if>
     <c:if test="${complains.totalPages > (complains.pageNumber + 2)}">
         <a href="/complain?page=${complains.pageNumber + 2}">
             <button type="button" class="btn btn-outline-info btn-link btn-floating" data-mdb-ripple-color="blue">
@@ -133,13 +121,13 @@ There are ${requestScope.complains.complainList.size()} complain (s) in list.
             </button>
         </a>
     </c:if>
-<c:if test="${complains.hasNext}">
-    <a href="/complain?page=${complains.pageNumber + 1}">
-        <button type="button" class="btn btn-primary btn-floating">
-            <i class="fa-solid fa-caret-right fa-lg"></i>
-        </button>
-    </a>
-</c:if>
+    <c:if test="${complains.hasNext}">
+        <a href="/complain?page=${complains.pageNumber + 1}">
+            <button type="button" class="btn btn-primary btn-floating">
+                <i class="fa-solid fa-caret-right fa-lg"></i>
+            </button>
+        </a>
+    </c:if>
     <a href="/complain?page=${complains.totalPages - 1}">
         <button type="button" class="btn btn-primary btn-floating">
             <i class="fa-solid fa-forward"></i>

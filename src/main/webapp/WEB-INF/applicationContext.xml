@@ -8,23 +8,23 @@
         http://www.springframework.org/schema/security
         http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <!-- Enable Spring Security -->
-    <security:http auto-config="true">
-        <!-- Define security constraints -->
-        <security:intercept-url pattern="/complain/**" access="authenticated" />
-        <security:form-login login-page="/login" default-target-url="/complain"
-                             authentication-failure-url="/login?error=true" />
-        <security:logout logout-success-url="/login?logout=true" />
-    </security:http>
+<!--    &lt;!&ndash; Enable Spring Security &ndash;&gt;-->
+<!--    <security:http auto-config="true">-->
+<!--        &lt;!&ndash; Define security constraints &ndash;&gt;-->
+<!--        <security:intercept-url pattern="/complain/**" access="hasAnyRole('USER','ADMIN')" />-->
+<!--        <security:form-login login-page="/login" default-target-url="/complain"-->
+<!--                             authentication-failure-url="/login?error=true" login-processing-url="/j_spring_security_check" />-->
+<!--        <security:logout logout-success-url="/login?logout=true" />-->
+<!--    </security:http>-->
 
-    <!-- Configure authentication manager -->
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <!-- Configure your custom userDetailsService here -->
-            <security:user-service>
-                <security:user name="user" password="password" authorities="ROLE_USER" />
-                <security:user name="admin" password="admin" authorities="ROLE_ADMIN" />
-            </security:user-service>
-        </security:authentication-provider>
-    </security:authentication-manager>
+<!--    &lt;!&ndash; Configure authentication manager &ndash;&gt;-->
+<!--    <security:authentication-manager>-->
+<!--        <security:authentication-provider>-->
+<!--            &lt;!&ndash; Configure your custom userDetailsService here &ndash;&gt;-->
+<!--            <security:user-service>-->
+<!--                <security:user name="user" password="password" authorities="ROLE_USER" />-->
+<!--                <security:user name="admin" password="admin" authorities="ROLE_ADMIN" />-->
+<!--            </security:user-service>-->
+<!--        </security:authentication-provider>-->
+<!--    </security:authentication-manager>-->
 </beans>

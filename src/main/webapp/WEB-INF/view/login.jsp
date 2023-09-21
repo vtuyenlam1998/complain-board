@@ -225,7 +225,7 @@
                     <form class="flip-card__form" name="loginForm" action="/j_spring_security_check" method="post">
                         <input class="flip-card__input" name="username" placeholder="Username" type="text">
                         <input class="flip-card__input" name="password" placeholder="Password" type="password">
-                        <button class="flip-card__btn">Let`s go!</button>
+                        <button type="submit" class="flip-card__btn">Let`s go!</button>
                     </form>
                 </div>
             </div>

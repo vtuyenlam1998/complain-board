@@ -10,6 +10,7 @@ import com.example.complainboard.service.ComplainService;
 import com.example.complainboard.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/complain")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ComplainController {
     private final ComplainService complainService;
     private final UserService userService;

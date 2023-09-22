@@ -1,22 +1,22 @@
 package com.example.complainboard.payload.response;
 
-import com.example.complainboard.model.Role;
+import com.example.complainboard.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CurrentUserResponseDTO {
-    private String username;
-    private String role;
-    private String image;
+public class ComplainResponseDTO {
+    private Long id;
+    private String title;
+    private String comment;
+    private String timeCreation;
+    private User user;
 }

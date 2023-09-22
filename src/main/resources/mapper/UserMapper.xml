@@ -1,0 +1,60 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.complainboard.mapper.UserMapper">
+    <select id="findByUsername" parameterType="String" resultMap="userResultMap">
+        SELECT *
+        FROM users
+        where username = #{username}
+    </select>
+
+    <select id="getUserById" parameterType="Long" resultMap="userResultMap">
+        SELECT *
+        FROM users
+        where id = #{id}
+    </select>
+
+    <select id="findRolesByUsername" parameterType="String" resultType="java.lang.String">
+        SELECT r.name
+        from roles r
+                 inner join users u on r.id = u.role_id
+        where u.username = #{username}
+    </select>
+
+    <select id="getUserByComplainId" parameterType="Long" resultMap="userResultMap">
+        SELECT u.*
+        FROM users u
+                 inner join complains c on u.id = c.user_id
+        where c.id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.example.complainboard.model.User" useGeneratedKeys="true"
+            keyProperty="id">
+            insert into users(username,password,role_id,image) values (#{username}, #{password}, #{role.id}, #{image})
+    </insert>
+
+    <resultMap id="userResultMap" type="com.example.complainboard.model.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="active" column="active"/>
+        <result property="image" column="image"/>
+        <association property="role" column="role_id" javaType="com.example.complainboard.model.Role" resultMap="roleResultMap">
+        </association>
+        <collection property="complainList" ofType="Complain" resultMap="complainResultMap"/>
+    </resultMap>
+
+    <resultMap id="complainResultMap" type="com.example.complainboard.model.Complain">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="comment" column="comment" />
+        <result property="active" column="active" />
+        <result property="timeCreation" column="time_creation" />
+    </resultMap>
+
+    <resultMap id="roleResultMap" type="com.example.complainboard.model.Role">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="description" column="description" />
+    </resultMap>
+</mapper>

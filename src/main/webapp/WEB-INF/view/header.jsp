@@ -14,6 +14,9 @@
         .message {
             color: green;
         }
+        .message-error {
+            color: red;
+        }
     </style>
     <!-- Font Awesome -->
     <link

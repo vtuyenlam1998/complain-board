@@ -6,6 +6,7 @@ import com.example.complainboard.model.User;
 import com.example.complainboard.pageable.MyBatisPageable;
 import com.example.complainboard.payload.request.CreateComplainRequestDTO;
 import com.example.complainboard.payload.request.EditComplainRequestDTO;
+import com.example.complainboard.payload.response.ComplainResponseDTO;
 import com.example.complainboard.payload.response.CurrentUserResponseDTO;
 import com.example.complainboard.payload.response.PageResponseDTO;
 import com.example.complainboard.service.ComplainService;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -52,10 +54,10 @@ public class ComplainController {
         ModelAndView modelAndView = new ModelAndView("detail");
         CurrentUserResponseDTO currentUser = userService.getCurrentUser();
         User user = userService.findByComplainId(id);
-        if (!Objects.equals(user.getUsername(), currentUser.getUsername())) {
+        if (!Objects.equals(user.getUsername(), currentUser.getUsername()) && currentUser.getRole().equals("ADMIN")) {
             throw new NotFoundException("Complain not found");
         }
-        Complain complain = complainService.findById(id);
+        ComplainResponseDTO complain = complainService.findById(id);
         modelAndView.addObject("complain",complain);
         return modelAndView;
     }
@@ -63,7 +65,7 @@ public class ComplainController {
     @GetMapping("/edit/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("edit");
-        Complain complain = complainService.findById(id);
+        ComplainResponseDTO complain = complainService.findById(id);
         modelAndView.addObject("complain",complain);
         return modelAndView;
     }
@@ -85,13 +87,7 @@ public class ComplainController {
         return modelAndView;
     }
 
-    @PostMapping("/create")
-    public ModelAndView createNewComplain(@ModelAttribute CreateComplainRequestDTO requestDTO, RedirectAttributes redirectAttributes ) throws IllegalAccessException {
-        ModelAndView modelAndView = new ModelAndView("redirect:/complain");
-        complainService.save(requestDTO);
-        redirectAttributes.addFlashAttribute("message","New complain has been created successfully!");
-        return modelAndView;
-    }
+
 
     @PostMapping("/edit")
     public ModelAndView updateComplain(@ModelAttribute EditComplainRequestDTO requestDTO, RedirectAttributes redirectAttributes) {

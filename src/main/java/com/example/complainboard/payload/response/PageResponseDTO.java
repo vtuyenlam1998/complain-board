@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PageResponseDTO {
-    List<Complain> complainList;
+    List<ComplainResponseDTO> complainList;
     long pageNumber;
     long totalPages;
     boolean hasNext;

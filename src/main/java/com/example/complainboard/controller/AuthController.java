@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,8 +22,13 @@ public class AuthController {
         return new ModelAndView("login");
     }
     @GetMapping("/login")
-    public ModelAndView login() {
-        return new ModelAndView("login");
+    public ModelAndView login(@RequestParam(required = false,name = "status") String status) {
+        ModelAndView modelAndView = new ModelAndView("login");
+        if(status!= null && status.equals("incorrectAccount")){
+            modelAndView.addObject("loginFailed","Wrong Information");
+            return modelAndView;
+        }
+        return modelAndView;
     }
 
     @GetMapping("/access-denied")

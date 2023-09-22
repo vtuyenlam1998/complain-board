@@ -39,7 +39,7 @@ public class SecurityConfigV2 extends WebSecurityConfigurerAdapter {
 //        It configures the URL where the login form data will be posted for processing, and it allows unrestricted access to this URL.
                 .loginProcessingUrl("/j_spring_security_check").permitAll()
 //        In case of login failure, the user will be redirected to the "/login?incorrectAccount" URL.
-                .failureUrl("/login?incorrectAccount")
+                .failureUrl("/login?status=incorrectAccount")
                 //        This configures logout settings, specifying the "/logout" URL for logging out.
                 .and().logout().logoutUrl("/logout")
 //        After successful logout, the user will be redirected to the "/login?logout=true" URL, and this URL is accessible to all.

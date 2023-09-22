@@ -22,6 +22,7 @@
 
 <h1 class="text-decoration-underline text-center">Complain List</h1>
 <div class="flex-box justify-content-center float-end">
+    <img width="100" height="100" src="/image/${user.image}" alt="">
     <p class="text-uppercase fw-bold" style="width: 6rem">Hello: ${user.username}</p><a href="/logout">
         <button class="btn btn-warning">Log out</button>
     </a>

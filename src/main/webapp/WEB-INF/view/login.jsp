@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
@@ -58,6 +59,15 @@
                     <div class="divider d-flex align-items-center my-4">
                         <p class="text-center fw-bold mx-3 mb-0">Or</p>
                     </div>
+
+                    <p><c:if test="${loginFailed} != null"/>
+                        <span class="message-error">
+                        ${loginFailed}
+                    </span></p>
+                    <p><c:if test="${message} != null"/>
+                        <span class="message">
+                            ${message}
+                        </span></p>
 
                     <!-- Email input -->
                     <div class="form-outline mb-4">

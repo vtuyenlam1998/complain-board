@@ -9,12 +9,16 @@ import com.example.complainboard.payload.request.UserRegisterRequestDTO;
 import com.example.complainboard.payload.response.CurrentUserResponseDTO;
 import com.example.complainboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -23,6 +27,10 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
     private final UserConverter userConverter;
+
+    @Value("${file-upload}")
+    private String fileUpload;
+
     @Override
     public List<String> findRolesByUsername(String username) {
         return userMapper.findRolesByUsername(username);
@@ -30,8 +38,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserRegisterRequestDTO requestDTO) {
+        MultipartFile multipartFile = requestDTO.getImage();
+        String fileName = multipartFile.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(requestDTO.getImage().getBytes(),new File(fileUpload + fileName));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         Role role = roleMapper.findRoleByName("ROLE_USER");
         User user = userConverter.convertRegisterRequestDTOToEntity(requestDTO);
+        user.setImage(fileName);
         user.setRole(role);
         userMapper.save(user);
     }
@@ -44,11 +60,17 @@ public class UserServiceImpl implements UserService {
             userDetails = (UserDetails) authentication.getPrincipal();
         }
         assert userDetails != null;
-        return userConverter.convertUserDetailsToResponseDTO(userDetails);
+        User user = getUserByUsername(userDetails.getUsername());
+        return userConverter.convertUserDetailsToResponseDTO(user);
     }
 
     @Override
     public User findByComplainId(Long id) {
         return userMapper.getUserByComplainId(id);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userMapper.findByUsername(username);
     }
 }

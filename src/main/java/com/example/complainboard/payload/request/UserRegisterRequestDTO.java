@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Setter
 @Getter
@@ -13,6 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class UserRegisterRequestDTO {
+    private int id;
     private String username;
     private String password;
+    private MultipartFile image;
 }

@@ -20,4 +20,5 @@ public class User {
     private Boolean active;
     private Role role;
     private List<Complain> complainList;
+    private String image;
 }

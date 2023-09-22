@@ -37,23 +37,25 @@ public class UserConverter {
     //    Converts data from CurrentUserResponseDTO object to User entity returned to view
     public CurrentUserResponseDTO convertEntityToUserResponseDTO(User user) {
         return CurrentUserResponseDTO.builder()
+                .image(user.getImage())
                 .username(user.getUsername())
                 .build();
     }
 
 //    Converts data from UserDetails object to CurrentUserResponseDTO returned to view
-    public CurrentUserResponseDTO convertUserDetailsToResponseDTO(UserDetails userDetails) {
+    public CurrentUserResponseDTO convertUserDetailsToResponseDTO(User user) {
 
 //        By using the stream to go through each element in the list of Authorities using the getAuthority method and put it in the List role one by one.
-        List<String> roles = userDetails.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+//        List<String> roles = userDetail.getAuthorities()
+//                .stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.toList());
 
 //        Use the Build Design Pattern to create a new CurrentUserResponseDTO object from the UserDetails object by mapping properties between each other.
         return CurrentUserResponseDTO.builder()
-                .role(roles.stream().findFirst().orElse(null))
-                .username(userDetails.getUsername())
+                .image(user.getImage())
+                .role(user.getRole().getName())
+                .username(user.getUsername())
                 .build();
     }
 }

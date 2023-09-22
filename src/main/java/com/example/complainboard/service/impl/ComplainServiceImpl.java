@@ -9,6 +9,7 @@ import com.example.complainboard.model.User;
 import com.example.complainboard.pageable.MyBatisPageable;
 import com.example.complainboard.payload.request.CreateComplainRequestDTO;
 import com.example.complainboard.payload.request.EditComplainRequestDTO;
+import com.example.complainboard.payload.response.ComplainResponseDTO;
 import com.example.complainboard.payload.response.CurrentUserResponseDTO;
 import com.example.complainboard.payload.response.PageResponseDTO;
 import com.example.complainboard.service.ComplainService;
@@ -39,8 +40,9 @@ public class ComplainServiceImpl implements ComplainService{
     }
 
     @Override
-    public Complain findById(Long id) {
-        return complainMapper.getComplainById(id);
+    public ComplainResponseDTO findById(Long id) {
+        Complain complain = complainMapper.getComplainById(id);
+        return complainConverter.convertEntityToResponseDTO(complain);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class ComplainServiceImpl implements ComplainService{
         long totalRecordCount = complainMapper.getTotalRecordCount();
         long totalPage = (totalRecordCount + pageable.getSize() - 1) / pageable.getSize();
         PageResponseDTO responseDTO = new PageResponseDTO();
-        responseDTO.setComplainList(complainList);
+        responseDTO.setComplainList(complainConverter.convertListEntityToListDTO(complainList));
         responseDTO.setPageNumber(pageable.getPage());
         responseDTO.setTotalPages(totalPage);
         responseDTO.setHasNext(pageable.getPage()< totalPage - 1);

@@ -15,4 +15,6 @@ public interface UserService {
     CurrentUserResponseDTO getCurrentUser() throws IllegalAccessException;
 
     User findByComplainId(Long id);
+
+    User getUserByUsername(String username);
 }

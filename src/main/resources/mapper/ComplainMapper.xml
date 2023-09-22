@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.complainboard.mapper.ComplainMapper">
+
+    <select id="getComplainById" parameterType="Long" resultMap="complainResultMap">
+        SELECT * FROM complains where id= #{id}
+    </select>
+
+    <select id="getAllComplains" parameterType="Long" resultMap="complainResultMap">
+        SELECT * FROM complains
+    </select>
+
+
+    <select id="getComplainsByPage" parameterType="org.apache.ibatis.session.RowBounds" resultMap="complainResultMap">
+        SELECT
+            c.*,
+            u.username
+        FROM
+            complains c
+                INNER JOIN
+            users u ON c.user_id = u.id
+    </select>
+
+    <insert id="insertComplain" parameterType="com.example.complainboard.model.Complain" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO complains (title,comment,user_id) values (#{title},#{comment},#{user.id})
+    </insert>
+
+    <update id="updateComplain" parameterType="com.example.complainboard.model.Complain">
+        UPDATE complains SET title = #{title} , comment = #{comment} where id = #{id}
+    </update>
+
+    <delete id="deleteComplain" parameterType="long">
+        DELETE FROM complains WHERE id = #{id}
+    </delete>
+
+    <select id="getTotalRecordCount" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM complains
+    </select>
+
+    <resultMap id="complainResultMap" type="com.example.complainboard.model.Complain">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="comment" column="comment"/>
+        <result property="active" column="active"/>
+        <result property="timeCreation" column="time_creation"/>
+        <association property="user" column="user_id" javaType="com.example.complainboard.model.User" resultMap="userResultMap">
+        </association>
+    </resultMap>
+
+    <resultMap id="userResultMap" type="com.example.complainboard.model.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="active" column="active"/>
+    </resultMap>
+</mapper>

@@ -32,10 +32,8 @@
 
             <!-- Right elements -->
             <div class="d-flex align-items-center justify-content-start">
-                <!-- Icon -->
-                <a class="text-reset me-3" href="#">
-                    <i class="fas fa-shopping-cart text-white"></i>
-                </a>
+
+                <p style="font-size: 20px"><c:out value="${user.role}"/></p>
 
                 <!-- Notifications -->
                 <div class="dropdown">

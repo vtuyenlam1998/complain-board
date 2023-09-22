@@ -60,8 +60,10 @@ public class ComplainController {
 //        Finally, this line returns the modelAndView, which will be processed by Spring MVC to render the "complain/homepage" view. The view can access the "complains" and "user" objects to display the paginated complaints and user information.
         return modelAndView;
     }
+
 //    This annotation maps an HTTP GET request to a URL with a path variable id. It means that this method will handle requests like "/complain/{id}" where {id} is a placeholder for the complaint's unique identifier.
     @GetMapping("/{id}")
+
 //    This is the method signature. It accepts the id path variable, which represents the unique identifier of the complaint.
     public ModelAndView showComplainDetail(@PathVariable Long id) throws IllegalAccessException {
 

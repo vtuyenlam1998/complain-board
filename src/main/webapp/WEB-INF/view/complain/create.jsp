@@ -41,7 +41,6 @@
         </table>
     </fieldset>
 </form>
-</body>
 <script>
     function createComplain() {
         // Tạo một đối tượng XMLHttpRequest
@@ -78,4 +77,5 @@
 
     }
 </script>
+</body>
 </html>

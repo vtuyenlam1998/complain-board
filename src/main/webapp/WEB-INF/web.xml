@@ -4,21 +4,37 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <context-param>
+        <!--        This specifies a context parameter named "contextConfigLocation," which is often used to define the location of the Spring application context configuration file.-->
         <param-name>contextConfigLocation</param-name>
+
+        <!--        This sets the value of the "contextConfigLocation" parameter to "/WEB-INF/applicationContext.xml," indicating that the Spring application context configuration is located in this file.-->
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
+
     <listener>
+        <!--        This listener class, ContextLoaderListener, is used to load the Spring application context when the web application starts. It reads the configuration defined in the "applicationContext.xml" file.-->
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
     <servlet>
+        <!--        This defines a servlet named "dispatcher."-->
         <servlet-name>dispatcher</servlet-name>
+
+        <!--        It specifies the class that will handle HTTP requests. In this case, it's the Spring DispatcherServlet, which is responsible for processing requests and delegating them to appropriate controllers.-->
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+        <!--        This sets the servlet to be loaded on application startup with a load-on-startup priority of 1.-->
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
+        <!--        This associates the "dispatcher" servlet with the URL pattern "/," indicating that it will handle all requests coming to the root of the web application.-->
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <!--    These sections configure filters for the web application.-->
+    <!--    The first filter, named "encoding-filter," is used to set the character encoding to UTF-8 for all requests. It ensures that text data is correctly encoded and decoded.-->
     <filter>
         <filter-name>encoding-filter</filter-name>
         <filter-class>
@@ -38,31 +54,35 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <jsp-config>
-        <jsp-property-group>
-            <url-pattern>*.jsp</url-pattern>
-            <page-encoding>UTF-8</page-encoding>
-        </jsp-property-group>
-    </jsp-config>
-
     <!-- Spring Security Filter -->
+    <!--    The second filter, "springSecurityFilterChain," is related to Spring Security and is configured to handle security-related filtering for all requests.-->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--    The third filter, "Sitemesh," is related to site decoration and is used for applying site-wide layouts to pages. It is configured to handle filtering for all requests.-->
     <filter>
         <filter-name>Sitemesh</filter-name>
         <filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>Sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <jsp-config>
+        <jsp-property-group>
+<!--            It specifies that the configuration applies to all JSP files.-->
+            <url-pattern>*.jsp</url-pattern>
+
+<!--            It sets the page encoding for JSP files to UTF-8, ensuring that JSPs are interpreted with the correct character encoding.-->
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
+
 </web-app>

@@ -20,20 +20,25 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Fetch the User entity from the database based on the provided username.
         User user = userMapper.findByUsername(username);
 
+        // Check if the user was found in the database.
         if (user == null) {
-            throw new UsernameNotFoundException("User " + username + "was not found in database!");
+            throw new UsernameNotFoundException("User " + username + " was not found in the database!");
         }
 
+        // Fetch the roles associated with the user from the database.
         List<String> roles = userMapper.findRolesByUsername(username);
 
+        // Create a list of GrantedAuthority objects based on the user's roles.
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (String role: roles) {
+        for (String role : roles) {
             GrantedAuthority authority = new SimpleGrantedAuthority(role);
             grantedAuthorities.add(authority);
         }
 
+        // Create a UserDetails object with the user's username, password, and authorities (roles).
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),

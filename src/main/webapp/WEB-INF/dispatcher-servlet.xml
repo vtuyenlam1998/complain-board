@@ -2,7 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:security="http://www.springframework.org/schema/security"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -11,13 +10,22 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--    This line is configuring component scanning in Spring. It tells Spring to scan the package "com.example.complainboard" and its subpackages for classes annotated with Spring stereotypes such as @Controller, @Service, @Repository, and others.-->
+    <!--    Component scanning allows Spring to automatically discover and register beans (components) within the specified package, making it easier to manage Spring components without explicitly configuring each one.-->
     <context:component-scan base-package="com.example.complainboard"/>
 
-
+    <!--    This configuration enables Spring's support for various MVC-related annotations, such as @RequestMapping, @Controller, and more.-->
+    <!--    It also enables features like support for validation, formatting, and message conversion.-->
     <mvc:annotation-driven/>
 
+    <!--    This section defines a ViewResolver bean, specifically an InternalResourceViewResolver. A ViewResolver is responsible for resolving view names (e.g., "example") to actual view resources (e.g., JSP files).-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+        <!--    <property name="prefix" value="/WEB-INF/view/"/>: This sets the prefix for view names. When you return a view name like "example," Spring MVC will prepend this prefix to the view name to create the actual JSP file's path. For example, "example" would become "/WEB-INF/view/example.jsp."-->
         <property name="prefix" value="/WEB-INF/view/"/>
+
+        <!--    <property name="suffix" value=".jsp"/>: This sets the suffix for view names. It specifies that the views are JSP files with the ".jsp" extension.-->
         <property name="suffix" value=".jsp"/>
     </bean>
+
 </beans>

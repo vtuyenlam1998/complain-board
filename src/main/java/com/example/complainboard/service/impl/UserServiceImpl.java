@@ -38,29 +38,55 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserRegisterRequestDTO requestDTO) {
+        // Extract the image file from the request DTO.
         MultipartFile multipartFile = requestDTO.getImage();
+
+        // Get the original filename of the image file.
         String fileName = multipartFile.getOriginalFilename();
+
         try {
-            FileCopyUtils.copy(requestDTO.getImage().getBytes(),new File(fileUpload + fileName));
+            // Copy the bytes of the image file to a location on the server.
+            FileCopyUtils.copy(requestDTO.getImage().getBytes(), new File(fileUpload + fileName));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
+        // Find the "ROLE_USER" role from the database (assuming roleMapper does this).
         Role role = roleMapper.findRoleByName("ROLE_USER");
+
+        // Convert the UserRegisterRequestDTO into a User entity.
         User user = userConverter.convertRegisterRequestDTOToEntity(requestDTO);
+
+        // Set the image filename for the user.
         user.setImage(fileName);
+
+        // Set the user's role to "ROLE_USER".
         user.setRole(role);
+
+        // Save (insert) the User entity into the database using userMapper.
         userMapper.save(user);
     }
 
     @Override
     public CurrentUserResponseDTO getCurrentUser() throws IllegalAccessException {
+        // Get the current authentication context.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Initialize a UserDetails object.
         UserDetails userDetails = null;
+
+        // Check if the authentication context is not null and the principal is an instance of UserDetails.
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             userDetails = (UserDetails) authentication.getPrincipal();
         }
+
+        // Ensure that userDetails is not null.
         assert userDetails != null;
+
+        // Get the user entity associated with the authenticated user's username.
         User user = getUserByUsername(userDetails.getUsername());
+
+        // Convert the user details into a CurrentUserResponseDTO.
         return userConverter.convertUserDetailsToResponseDTO(user);
     }
 

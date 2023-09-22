@@ -14,9 +14,11 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
+//This annotation is used to specify the package where MyBatis mapper interfaces are located. MyBatis mappers are responsible for defining SQL queries and mapping the results to Java objects. In this case, it's configured to scan the "com.example.complainboard.mapper" package for MyBatis mappers.
 @MapperScan("com.example.complainboard.mapper")
+//the MyBatisConfig class is a Spring configuration class that sets up MyBatis by specifying the package where MyBatis mapper interfaces are located and injecting database-related properties (driver name, URL, username, password) from a configuration source. These properties are crucial for configuring the database connection used by MyBatis to interact with the database.
 public class MyBatisConfig {
-
+//    These properties are typically used to configure the database connection, specifying details such as the database driver, URL, username, and password.
     @Value("${db.driver-name}")
     private String dbDriverName;
 
@@ -69,12 +71,16 @@ public class MyBatisConfig {
     @Bean
 //    This method defines a bean named "transactionManager" of type DataSourceTransactionManager. It takes a DataSource as an argument, indicating that this bean depends on a DataSource bean.
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
-//        This line creates a new instance of DataSourceTransactionManager and initializes it with the provided DataSource. The DataSourceTransactionManager manages database transactions, ensuring that they are properly committed or rolled back.
+
+    //This line creates a new instance of DataSourceTransactionManager and initializes it with the provided DataSource. The DataSourceTransactionManager manages database transactions, ensuring that they are properly committed or rolled back.
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean
+    //This is the method declaration. It declares a method named sqlSessionTemplate, and it takes a parameter of type SqlSessionFactory. The SqlSessionFactory is typically used to create SQL sessions in MyBatis, a popular Java persistence framework for working with relational databases.
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+
+    //This line of code creates a new instance of SqlSessionTemplate and initializes it with the SqlSessionFactory passed as a parameter. The SqlSessionTemplate is a class provided by MyBatis that simplifies the usage of SQL sessions. It manages the lifecycle of SQL sessions, commits or rolls back transactions, and provides a convenient API for executing SQL queries.
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }

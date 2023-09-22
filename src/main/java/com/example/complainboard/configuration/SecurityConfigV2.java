@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+//@EnableWebSecurity is a key annotation to kickstart Spring Security configuration for web applications, making it easier to define and enforce security policies for your application.
 @EnableWebSecurity
 // This class extends WebSecurityConfigurerAdapter, which is a convenient base class for configuring Spring Security. It allows you to customize security settings.
 public class SecurityConfigV2 extends WebSecurityConfigurerAdapter {

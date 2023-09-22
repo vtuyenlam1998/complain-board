@@ -9,14 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface RoleMapper {
-//    @Select("SELECT * FROM roles where name = #{name} ")
     Role findRoleByName(@Param("name") String name);
-//    @Results(id = "roleResultMap", value = {
-//            @Result(column = "id", property = "id", id = true),
-//            @Result(column = "name", property = "name"),
-//            @Result(column = "description", property = "description")
-//    })
-//
-//    @Select("SELECT * FROM roles WHERE id = #{id}")
+
     Role getRoleById(Long id);
 }

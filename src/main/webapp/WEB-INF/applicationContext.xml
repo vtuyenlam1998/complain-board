@@ -11,39 +11,5 @@
             http://www.springframework.org/schema/context
             https://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <!--    &lt;!&ndash; Enable Spring Security &ndash;&gt;-->
-    <!--    <http auto-config="true">-->
-    <!--        &lt;!&ndash; Define security constraints &ndash;&gt;-->
-    <!--        <intercept-url pattern="/complain/**" access="hasAnyRole('USER','ADMIN')" />-->
-    <!--        <form-login login-page="/login" default-target-url="/complain"-->
-    <!--                             authentication-failure-url="/login?error=true" login-processing-url="/j_spring_security_check" />-->
-    <!--        <logout logout-success-url="/login?logout=true" />-->
-    <!--    </http>-->
-
-    <!--    <authentication-manager >-->
-    <!--        <authentication-provider user-service-ref="UserDetailsService">-->
-    <!--            <password-encoder ref="bcryptEncoder"/>-->
-    <!--        </authentication-provider>-->
-    <!--    </authentication-manager>-->
-
-    <!-- cấu hình chi tiết từ logic xử lý trên -->
-
-    <!--    &lt;!&ndash; password md5 &ndash;&gt;-->
-    <!--    <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />-->
-    <!--    &lt;!&ndash; xử lý authentication khi submit đăng nhập &ndash;&gt;-->
-    <!--    <beans:bean id="UserDetailsService" class="com.example.complainboard.service.impl.UserDetailsServiceImpl" />-->
-
-
-    <!--     Configure authentication manager-->
-    <!--    <authentication-manager>-->
-    <!--        <authentication-provider>-->
-    <!--            &lt;!&ndash; Configure your custom userDetailsService here &ndash;&gt;-->
-    <!--            <user-service>-->
-    <!--                <user name="user" password="password" authorities="ROLE_USER" />-->
-    <!--                <user name="admin" password="admin" authorities="ROLE_ADMIN" />-->
-    <!--            </user-service>-->
-    <!--        </authentication-provider>-->
-    <!--    </authentication-manager>-->
     <context:component-scan base-package="com.example.complainboard"/>
 </beans>

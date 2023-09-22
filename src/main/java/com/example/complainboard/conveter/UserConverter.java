@@ -45,12 +45,6 @@ public class UserConverter {
 //    Converts data from UserDetails object to CurrentUserResponseDTO returned to view
     public CurrentUserResponseDTO convertUserDetailsToResponseDTO(User user) {
 
-//        By using the stream to go through each element in the list of Authorities using the getAuthority method and put it in the List role one by one.
-//        List<String> roles = userDetail.getAuthorities()
-//                .stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.toList());
-
 //        Use the Build Design Pattern to create a new CurrentUserResponseDTO object from the UserDetails object by mapping properties between each other.
         return CurrentUserResponseDTO.builder()
                 .image(user.getImage())

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="../../../common/taglib.jsp" %>
 <html>
 <head>
     <title>Create Complain</title>
@@ -19,22 +20,22 @@
         <legend>
             Complain Form
         </legend>
-        <table>
+        <table class="table table-striped">
             <tr>
-                <td><label for="title">Title:</label></td>
+                <th scope="row"><label for="title">Title:</label></th>
                 <td><input type="text" id="title" name="title" size="45" title="letter and number allowed"></td>
             </tr>
             <tr>
-                <td><label for="comment">Comment:</label></td>
+                <th scope="row"><label for="comment">Comment:</label></th>
                 <td><input type="text" id="comment" name="comment" size="45" title="letter and number allowed"></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
                     <a href="/complain">
-                        <button type="button">Cancel</button>
+                        <button class="btn btn-success" type="button">Cancel</button>
                     </a>
-                    <button type="button" onclick="createComplain()">Create</button>
+                    <button type="button" onclick="createComplain()" class="btn btn-primary">Create</button>
                 </td>
             </tr>
         </table>

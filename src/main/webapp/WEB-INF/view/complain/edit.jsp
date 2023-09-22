@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="header.jsp" %>
+<%@include file="../../../common/taglib.jsp" %>
 <html>
 <head>
     <title>Edit Complain</title>
@@ -19,7 +19,7 @@
         <legend>
             Complain Form <c:out value="${complain.id}"/>
         </legend>
-        <table class="table">
+        <table class="table table-striped">
             <tr>
                 <input type="hidden" id="id" name="id" size="45" title="letter and number allowed" value="${complain.id}">
                 <th scope="row"><label for="title">Title:</label></th>
@@ -32,7 +32,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <a href="/complain"><button type="button" class="btn btn-success">Cancel</button></a>
+                    <a href="/complain"><button  type="button" class="btn btn-success">Cancel</button></a>
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </td>
             </tr>

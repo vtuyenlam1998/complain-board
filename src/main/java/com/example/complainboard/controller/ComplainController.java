@@ -4,7 +4,6 @@ import com.example.complainboard.exception.NotFoundException;
 import com.example.complainboard.model.Complain;
 import com.example.complainboard.model.User;
 import com.example.complainboard.pageable.MyBatisPageable;
-import com.example.complainboard.payload.request.CreateComplainRequestDTO;
 import com.example.complainboard.payload.request.EditComplainRequestDTO;
 import com.example.complainboard.payload.response.ComplainResponseDTO;
 import com.example.complainboard.payload.response.CurrentUserResponseDTO;
@@ -12,7 +11,6 @@ import com.example.complainboard.payload.response.PageResponseDTO;
 import com.example.complainboard.service.ComplainService;
 import com.example.complainboard.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,7 +38,7 @@ public class ComplainController {
                                      @RequestParam(name = "size",required = false,defaultValue = "5") Integer size
                                      ) throws IllegalAccessException {
         MyBatisPageable pageable = new MyBatisPageable(page,size);
-        ModelAndView modelAndView = new ModelAndView("homepage");
+        ModelAndView modelAndView = new ModelAndView("complain/homepage");
         PageResponseDTO complains = complainService.findByPage(pageable);
         CurrentUserResponseDTO currentUser = userService.getCurrentUser();
         modelAndView.addObject("complains",complains);
@@ -51,7 +48,7 @@ public class ComplainController {
 
     @GetMapping("/{id}")
     public ModelAndView showComplainDetail(@PathVariable Long id) throws IllegalAccessException {
-        ModelAndView modelAndView = new ModelAndView("detail");
+        ModelAndView modelAndView = new ModelAndView("complain/detail");
         CurrentUserResponseDTO currentUser = userService.getCurrentUser();
         User user = userService.findByComplainId(id);
         if (!Objects.equals(user.getUsername(), currentUser.getUsername()) && currentUser.getRole().equals("ADMIN")) {
@@ -64,7 +61,7 @@ public class ComplainController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView showEditForm(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("edit");
+        ModelAndView modelAndView = new ModelAndView("complain/edit");
         ComplainResponseDTO complain = complainService.findById(id);
         modelAndView.addObject("complain",complain);
         return modelAndView;
@@ -72,7 +69,7 @@ public class ComplainController {
 
     @GetMapping("/create")
     public ModelAndView showCreateForm() {
-        ModelAndView modelAndView = new ModelAndView("create");
+        ModelAndView modelAndView = new ModelAndView("complain/create");
         Complain complain = new Complain();
         modelAndView.addObject("complain",complain);
         return modelAndView;

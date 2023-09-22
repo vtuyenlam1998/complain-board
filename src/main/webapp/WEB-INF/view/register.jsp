@@ -31,7 +31,7 @@
                                         <div class="form-outline flex-fill mb-0">
                                             <input type="text" id="username" name="username" class="form-control"
                                                    required/>
-                                            <label class="form-label" for="username">Your UserName</label>
+                                            <label class="form-label" for="username">UserName</label>
                                         </div>
                                     </div>
 

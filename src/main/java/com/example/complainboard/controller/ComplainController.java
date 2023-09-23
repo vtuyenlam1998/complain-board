@@ -11,6 +11,7 @@ import com.example.complainboard.payload.response.PageResponseDTO;
 import com.example.complainboard.service.ComplainService;
 import com.example.complainboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 @Controller
@@ -39,7 +41,8 @@ public class ComplainController {
     @GetMapping
     //@RequestParam annotations are used to capture query parameters from the request, specifically "page" and "size," with default values of 0 and 5, respectively.
     public ModelAndView showAllComplains(@RequestParam(name = "page",required = false,defaultValue = "0") Integer page,
-                                     @RequestParam(name = "size",required = false,defaultValue = "5") Integer size
+                                     @RequestParam(name = "size",required = false,defaultValue = "5") Integer size,
+                                         HttpSession session
                                      ) throws IllegalAccessException {
 
         // This line creates a MyBatisPageable object named pageable. It is likely a custom class or an extension of MyBatis to handle pagination.
@@ -56,7 +59,10 @@ public class ComplainController {
 //        This line adds the complains object (which contains the paginated list of complaints) to the modelAndView. This makes the data available to the view for rendering.
         modelAndView.addObject("complains", complains);
 //        This line adds the currentUser object (which contains information about the logged-in user) to the modelAndView. This data is also made available to the view.
-        modelAndView.addObject("user", currentUser);
+
+        session.setAttribute("user",currentUser);
+
+//        modelAndView.addObject("user", currentUser);
 //        Finally, this line returns the modelAndView, which will be processed by Spring MVC to render the "complain/homepage" view. The view can access the "complains" and "user" objects to display the paginated complaints and user information.
         return modelAndView;
     }
@@ -65,13 +71,13 @@ public class ComplainController {
     @GetMapping("/{id}")
 
 //    This is the method signature. It accepts the id path variable, which represents the unique identifier of the complaint.
-    public ModelAndView showComplainDetail(@PathVariable Long id) throws IllegalAccessException {
+    public ModelAndView showComplainDetail(@PathVariable Long id,HttpSession session) throws IllegalAccessException {
 
 //        This line initializes a ModelAndView object with the view name "complain/detail." It specifies that the controller intends to render the "detail" view for displaying complaint details.
         ModelAndView modelAndView = new ModelAndView("complain/detail");
 
 //        This line retrieves information about the currently logged-in user by calling the getCurrentUser method from the userService. The result is stored in a CurrentUserResponseDTO object named currentUser.
-        CurrentUserResponseDTO currentUser = userService.getCurrentUser();
+         CurrentUserResponseDTO currentUser = (CurrentUserResponseDTO) session.getAttribute("user");
 
 //        This line fetches information about the user who created the complaint with the specified id. It uses the findByComplainId method from the userService. The result is stored in a User object named user.
         User user = userService.findByComplainId(id);
@@ -79,7 +85,7 @@ public class ComplainController {
 //        !Objects.equals(user.getUsername(), currentUser.getUsername()): It checks if the username of the user who created the complaint (user.getUsername()) is not equal to the username of the currently logged-in user (currentUser.getUsername()). If this condition is met, it means the logged-in user is not the owner of the complaint.
 //        currentUser.getRole().equals("ADMIN"): It checks if the role of the currently logged-in user is "ADMIN." If this condition is met, it means the logged-in user has administrative privileges.
 //        If both conditions are true (i.e., the logged-in user is not the owner of the complaint and has an "ADMIN" role), the method throws a NotFoundException with the message "Complain not found." This is typically used to prevent unauthorized access to complaint details.
-        if (!Objects.equals(user.getUsername(), currentUser.getUsername()) && currentUser.getRole().equals("ADMIN")) {
+        if (!Objects.equals(user.getUsername(), currentUser.getUsername()) && !Objects.equals(currentUser.getRole(),"ROLE_ADMIN")) {
             throw new NotFoundException("Complain not found");
         }
 //        This line fetches the details of the complaint with the specified id using the findById method from the complainService. The result is stored in a ComplainResponseDTO object named complain.

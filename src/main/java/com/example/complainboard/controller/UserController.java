@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 
 
 @Controller
@@ -29,7 +30,7 @@ public class UserController {
 //    This is the method signature. It accepts two parameters:
 //    requestDTO: This parameter is annotated with @ModelAttribute("user"), which means that it will be bound to form data sent in the request and associated with the model attribute named "user." UserRegisterRequestDTO likely represents the data submitted by the user during registration.
 //            redirectAttributes: This is an instance of RedirectAttributes, which is used to add flash attributes that survive redirects. Flash attributes are typically used to display success or error messages after a redirect.
-    public ModelAndView register(@ModelAttribute("user") UserRegisterRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+    public ModelAndView register(@ModelAttribute("user") UserRegisterRequestDTO requestDTO, RedirectAttributes redirectAttributes) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
 
 //        This line queries the userService to check if a user with the provided username already exists. If a user with the same username is found, it indicates that the username is already registered.

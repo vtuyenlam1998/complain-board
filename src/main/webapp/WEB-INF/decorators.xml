@@ -2,7 +2,9 @@
 
 <!--        This is the root element of the XML configuration. It defines a directory where decorator templates can be found. In this case, it specifies the default directory as "/assets/decorators."-->
 <decorators defaultdir="/assets/decorators">
-
+    <excludes>
+        <pattern>/error-404.jsp</pattern>
+    </excludes>
 <!--    Inside the decorators element, there is a decorator element. This element defines a decorator named "complain" and specifies the template page to be used for this decorator, which is "complain.jsp."-->
     <decorator name="complain" page="complain.jsp">
 <!--        Within the decorator element, there is a pattern element that defines a URL pattern. In this case, it specifies "/complain*" as the pattern. This means that this decorator will be applied to requests whose URLs match the pattern "/complain*" (e.g., "/complain", "/complain/details", etc.).-->

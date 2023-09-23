@@ -10,7 +10,6 @@
 <head>
     <title>Title</title>
     <style>
-
         @import url('https://fonts.googleapis.com/css?family=Dosis:300,400,500');
 
         @-moz-keyframes rocket-movement { 100% {-moz-transform: translate(1200px,-600px);} }

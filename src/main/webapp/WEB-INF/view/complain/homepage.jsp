@@ -75,7 +75,7 @@
                 </button>
             </a>
         </c:if>
-        <c:if test="${(complains.pageNumber + 2 > complains.totalPages) && (complains.pageNumber > 0)}">
+        <c:if test="${(complains.pageNumber + 2 > complains.totalPages) && (complains.pageNumber > 1)}">
             <a href="/complain?page=${complains.pageNumber-2}">
                 <button type="button" class="btn btn-outline-info btn-link btn-floating" data-mdb-ripple-color="blue">
                     <span>${complains.pageNumber - 1}</span>

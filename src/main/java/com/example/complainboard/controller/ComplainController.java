@@ -1,6 +1,6 @@
 package com.example.complainboard.controller;
 
-import com.example.complainboard.exception.NotFoundException;
+import com.example.complainboard.exception.RestrictPermitException;
 import com.example.complainboard.model.Complain;
 import com.example.complainboard.model.User;
 import com.example.complainboard.pageable.MyBatisPageable;
@@ -11,7 +11,6 @@ import com.example.complainboard.payload.response.PageResponseDTO;
 import com.example.complainboard.service.ComplainService;
 import com.example.complainboard.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,7 +85,7 @@ public class ComplainController {
 //        currentUser.getRole().equals("ADMIN"): It checks if the role of the currently logged-in user is "ADMIN." If this condition is met, it means the logged-in user has administrative privileges.
 //        If both conditions are true (i.e., the logged-in user is not the owner of the complaint and has an "ADMIN" role), the method throws a NotFoundException with the message "Complain not found." This is typically used to prevent unauthorized access to complaint details.
         if (!Objects.equals(user.getUsername(), currentUser.getUsername()) && !Objects.equals(currentUser.getRole(),"ROLE_ADMIN")) {
-            throw new NotFoundException("Complain not found");
+            throw new RestrictPermitException("Complain not found");
         }
 //        This line fetches the details of the complaint with the specified id using the findById method from the complainService. The result is stored in a ComplainResponseDTO object named complain.
         ComplainResponseDTO complain = complainService.findById(id);

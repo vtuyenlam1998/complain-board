@@ -15,7 +15,7 @@ public class AuthController {
     //This method handles HTTP GET requests to the "/log-out" endpoint, typically used for user logout.
     //It returns a ModelAndView object, which is a Spring class used to combine both model data and view information.
     //In this case, it returns a ModelAndView with the view name "login," which suggests that after logging out, the user is redirected to the login page.
-    @GetMapping("/log-out")
+    @GetMapping("/logout")
     public ModelAndView logout() {
         return new ModelAndView("login");
     }
@@ -35,18 +35,6 @@ public class AuthController {
             return modelAndView;
         }
         return modelAndView;
-    }
-
-    //It returns a ModelAndView object with the view name "error-403," indicating that it's used to handle access denied (HTTP 403 Forbidden) situations. This is often used when a user tries to access a resource for which they don't have the necessary permissions.
-    @GetMapping("/access-denied")
-    public ModelAndView accessDenied() {
-        return new ModelAndView("error-403");
-    }
-
-    //It returns a ModelAndView object with the view name "error-404," indicating that it's used to handle resource not found (HTTP 404 Not Found) situations. This is often used when a user tries to access a non-existent resource.
-    @GetMapping("/not-found")
-    public ModelAndView notFound() {
-        return new ModelAndView("error-404");
     }
 
 }

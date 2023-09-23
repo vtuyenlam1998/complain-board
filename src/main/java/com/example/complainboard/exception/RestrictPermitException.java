@@ -1,7 +1,7 @@
 package com.example.complainboard.exception;
 
-public class NotFoundException extends RuntimeException {
-    public NotFoundException(String message) {
+public class RestrictPermitException extends RuntimeException {
+    public RestrictPermitException(String message) {
 //        Inside the constructor, it calls the constructor of the parent class RuntimeException (which is a built-in exception class in Java) and passes the provided error message to it using the super keyword. This sets the error message for the exception.
         super(message);
     }

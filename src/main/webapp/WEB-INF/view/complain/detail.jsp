@@ -52,7 +52,6 @@
         </tr>
     </table>
 </fieldset>
-</body>
 <script type="text/javascript">
     function deleteComplain(id){
         const url = 'delete/' + id;
@@ -87,4 +86,5 @@
         })
     }
 </script>
+</body>
 </html>

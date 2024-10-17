@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="LOG_DIR">/logs</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="FILE"
+            fileName="${LOG_DIR}/trace.log"
+            filePattern="${LOG_DIR}/trace_%d{yyyy-MM-dd}.log">
+            <PatternLayout
+                pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5p %c{1} - %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy
+                    interval="1" />
+                <SizeBasedTriggeringPolicy
+                    size="10MB" />
+            </Policies>
+        </RollingFile>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %5p [%c] %m%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="zesinc" level="DEBUG" additivity="false">
+            <appender-ref ref="console" />
+        </Logger>
+        <!-- log SQL with timing information, post execution -->
+        <logger name="jdbc.sqltiming" level="INFO"
+            additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+        <logger name="org.springframework" level="INFO"
+            additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+        <Logger
+            name="io.opentelemetry.exporter.logging.LoggingSpanExporter"
+            level="INFO" additivity="false">
+            <appender-ref ref="console" />
+            <appender-ref ref="FILE" />
+        </Logger>
+        <Root level="ERROR">
+            <appender-ref ref="console" />
+        </Root>
+    </Loggers>
+</Configuration>

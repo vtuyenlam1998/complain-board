@@ -34,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Create a list of GrantedAuthority objects based on the user's roles.
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (String role : roles) {
+//            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
             GrantedAuthority authority = new SimpleGrantedAuthority(role);
             grantedAuthorities.add(authority);
         }

@@ -26,7 +26,8 @@ public class SecurityConfigV2 extends WebSecurityConfigurerAdapter {
 //        This line allows unrestricted access (permitAll) to the "/login" and "/sign-up" URLs. Anyone can access these pages without authentication.
                 .antMatchers("/login", "/sign-up").permitAll()
 //        Here, it is configured that any URL starting with "/complain/" requires the user to have either the "USER" or "ADMIN" role to access. Users with these roles will be authorized to access these URLs.
-                .antMatchers("/complain/**").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/complain/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/complain/**").hasAnyAuthority("USER", "ADMIN")
 //        This line specifies that any other request not matched by the previous antMatchers should be authenticated, meaning users must be logged in to access them.
                 .anyRequest().authenticated()
 //        This is used to chain multiple configurations together.

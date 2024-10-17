@@ -1,0 +1,26 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="OTLP" class="io.opentelemetry.exporter.logging.SystemOutLogExporter">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="OpenTelemetryAppender" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+        <exporter class="io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogExporter">
+            <endpoint>http://localhost:4317</endpoint>
+        </exporter>
+        <formatter class="ch.qos.logback.classic.pattern.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </formatter>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="OpenTelemetryAppender"/>
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="OTLP" />
+    </root>
+</configuration>

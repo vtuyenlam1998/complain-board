@@ -88,3 +88,4 @@
 <%@ include file="/common/complain/footer.jsp"%>
 </body>
 </html>
+<script type="text/javascript" src="/assets/js/myscript.js" ></script>
